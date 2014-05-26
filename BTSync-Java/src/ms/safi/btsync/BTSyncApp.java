@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
@@ -34,27 +32,24 @@ import org.codehaus.jackson.JsonGenerator;
  * @author Omeed Safi
  *
  */
-public class BTSyncApp {	
+public class BTSyncApp {
 
 	//private File btSyncApp;
 
-	private String deviceName = "BTSync-Java";
-	private int listeningPort = 0;
-	private boolean checkForUpdates = false;
-	private boolean useUpnp = false;
-	private String storagePath = "./";
-	private boolean useGui = false;
-	private String listen = "127.0.0.1:18080";
-	private String login = "user";
-	private String password = "password";
+	private String deviceName;
+	private int listeningPort;
+	private boolean checkForUpdates;
+	private boolean useUpnp;
+	private String storagePath;
+	private boolean useGui;
+	private String listen;
+	private String login;
+	private String password;
 	private String apiKey;
 	
-	private String btSyncTmpPath = "/tmp/BTSyncPortable";
-	private File btSyncTmpFolder = new File(btSyncTmpPath);
-	private String btSyncExecutablePath = "/tmp/BTSyncPortable/btsync";
-	private File btSyncExecutable = new File(btSyncExecutablePath);
-	private String btSyncConfPath = "/tmp/BTSyncPortable/sync.conf";
-	private File btSyncConf = new File(btSyncConfPath);
+	private File btSyncTmpFolder = new File(System.getProperty("java.io.tmpdir"), "BTSyncJava");
+	private File btSyncExecutable = new File(btSyncTmpFolder, "btsync");
+	private File btSyncConf = new File(btSyncTmpFolder, "sync.conf");
 	
 	/**
 	 * Constructs a new BTSyncApp used to start a BitTorrent Sync instance with default
@@ -75,22 +70,20 @@ public class BTSyncApp {
 	 * @param apiKey the BitTorrent Sync API Key
 	 */
 	public BTSyncApp(String apiKey) {
+		this.deviceName = "BTSyncJava";
+		this.listeningPort = 0;
+		this.checkForUpdates = false;
+		this.useUpnp = false;
+		this.storagePath = "./";
+		this.useGui = false;
+		this.listen = "127.0.0.1:18080";
+		this.login = "user";
+		this.password = "password";
 		this.apiKey = apiKey;
 		
-		// Hardcoding things for UUX project for now TODO: Remove this stuff and do it correctly later
 		try {
 			FileUtils.deleteDirectory(btSyncTmpFolder);
 			Files.createDirectory(btSyncTmpFolder.toPath());
-			/*
-			Files.createFile(btSyncExecutable.toPath());
-			btSyncExecutable.setExecutable(true, false);
-			btSyncExecutable.setReadable(true, false);
-			btSyncExecutable.setWritable(true, false);*/
-			
-			Files.createFile(btSyncConf.toPath());
-			btSyncConf.setReadable(true, false);
-			btSyncConf.setWritable(true, false);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -241,8 +234,6 @@ public class BTSyncApp {
 		
 		this.extractLinuxBtSync();
 		this.buildConf();
-		//this.buildConf(new File(this.btSyncApp, "sync.conf"));
-		//File btSyncExe = new File(this.btSyncApp, "btsync");
 
 		try {
 			System.out.println(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
@@ -259,18 +250,12 @@ public class BTSyncApp {
 	}
 	
 	private void buildConf() {
-		
-		/*
-		if(!Files.exists(confFile.toPath())) {
-			try {
-				Files.createFile(confFile.toPath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}*/
-		
-		JsonFactory jFactory = new JsonFactory();
 		try {
+			Files.createFile(btSyncConf.toPath());
+			btSyncConf.setReadable(true, false);
+			btSyncConf.setWritable(true, false);
+		
+			JsonFactory jFactory = new JsonFactory();
 			JsonGenerator jGenerator = jFactory.createJsonGenerator(btSyncConf, JsonEncoding.UTF8);
 			jGenerator.useDefaultPrettyPrinter();
 			
@@ -317,10 +302,6 @@ public class BTSyncApp {
 	}*/
 	
 	private void extractLinuxBtSync() {
-		//File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-		//btSyncApp = new File(tmpDir, "BitTorrentSyncPortable/btsync");
-		
-		
 		try {
 			URL url = getClass().getClassLoader().getResource("btsync");
 			InputStream in = url.openStream();
@@ -328,7 +309,7 @@ public class BTSyncApp {
 			Files.copy(in, btSyncExecutable.toPath());
 			btSyncExecutable.setExecutable(true, false);
 			btSyncExecutable.setReadable(true, false);
-			btSyncExecutable.setWritable(true, false);
+			//btSyncExecutable.setWritable(true, false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -342,17 +323,4 @@ public class BTSyncApp {
 			e.printStackTrace();
 		}
 	}
-	
-	/*
-	private class BTSyncAppCleanup extends Thread {
-		@Override
-		public void run() {
-			// NOT WORKING YET
-			try {
-				FileUtils.deleteDirectory(btSyncApp);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}*/
 }
