@@ -37,7 +37,7 @@ public class BTSyncApp {
 	private String apiKey;
 	
 	private File btSyncTmpFolder = new File(System.getProperty("java.io.tmpdir"), "BTSyncJava");
-	private File btSyncExecutable = new File(btSyncTmpFolder, "btsync");
+	private File btSyncExecutable;// = new File(btSyncTmpFolder, "btsync");
 	private File btSyncConf = new File(btSyncTmpFolder, "sync.conf");
 	
 	/**
@@ -194,8 +194,10 @@ public class BTSyncApp {
 	 */
 	public BTSyncClient startBtSync() {
 		if(SystemUtils.IS_OS_WINDOWS) {
-			return null;//return this.startBtSyncWindows();
+			btSyncExecutable = new File(btSyncTmpFolder, "btsync.exe");
+			return this.startBtSyncWindows();
 		} else if(SystemUtils.IS_OS_UNIX) {
+			btSyncExecutable = new File(btSyncTmpFolder, "btsync");
 			return this.startBtSyncLinux();
 		} else if(SystemUtils.IS_OS_MAC_OSX) {
 			return this.startBtSyncMacOsx();
@@ -203,24 +205,22 @@ public class BTSyncApp {
 			return null;
 		}
 	}
-	/*
-	private BTSyncClient startBtSyncWindows() {
-		this.buildConf(new File(this.btSyncApp, "App/BitTorrentSync/sync.conf"));
-		this.extractWinBtSync();
-		
-		File btSyncExe = new File(this.btSyncApp, "BitTorrentSyncPortable.exe");
 
+	private BTSyncClient startBtSyncWindows() {
+		this.extractWinBtSync();
+		this.buildConf();
+		
 		try {
-			Runtime.getRuntime().exec(btSyncExe.getCanonicalPath());
+			System.out.println(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
+			Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		return new BTSyncClient(this.listen, this.login, this.password);
-	}*/
+	}
 	
 	private BTSyncClient startBtSyncLinux() {
-		
 		this.extractLinuxBtSync();
 		this.buildConf();
 
@@ -272,23 +272,19 @@ public class BTSyncApp {
 		}
 	}
 
-	/*
 	private void extractWinBtSync() {
-		File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-		
 		try {
-			URI btSyncLoc = this.getClass().getClassLoader().getResource("BitTorrentSyncPortable.zip").toURI();
-			File btSyncFile = new File(btSyncLoc);
+			URL url = getClass().getClassLoader().getResource("btsync-win.exe");
+			InputStream in = url.openStream();
 			
-			Unzip unzipper = new Unzip();
-			unzipper.setSrc(btSyncFile);
-			unzipper.setDest(tmpDir);
-			unzipper.execute();
-		} catch (URISyntaxException e) {
+			Files.copy(in, btSyncExecutable.toPath());
+			btSyncExecutable.setExecutable(true, false);
+			btSyncExecutable.setReadable(true, false);
+			btSyncExecutable.setWritable(true, false);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		btSyncApp = new File(tmpDir, "BitTorrentSyncPortable");
-	}*/
+	}
 	
 	private void extractLinuxBtSync() {
 		try {
