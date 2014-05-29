@@ -14,23 +14,12 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 
 /**
- * BTSyncApp is used for starting an instance of BitTorrent Sync. Packaged in the
- * BTSync-Java library is a PortableApps version of BitTorrent Sync 1.3.87 (credits to
- * darksabre76 - <a href="http://portableapps.com/node/38554">http://portableapps.com/node/38554</a>).
- * At the moment, BTSyncApp is only capable of starting this embedded version of BitTorrent Sync which also means
- * this works on Windows ONLY.
- * 
- * <p>Linux/Mac users will have to start BitTorrent Sync some other way and 
- * connect to Sync using {@link ms.safi.btsync.BTSyncClient}
- * 
- * 
- * <p>This class will be improved in the future to allow starting an instance of BitTorrent Sync that is
- * installed and possibly add embedded versions for mac/linux.
+ * BTSyncApp is used for starting an instance of BitTorrent Sync. A BitTorrent Sync executable
+ * for linux and windows platforms are bundled with this library.
  * 
  * NOTE: This now requires Java 1.7 due to the use of java.nio package
  * 
  * @author Omeed Safi
- *
  */
 public class BTSyncApp {
 
@@ -303,13 +292,13 @@ public class BTSyncApp {
 	
 	private void extractLinuxBtSync() {
 		try {
-			URL url = getClass().getClassLoader().getResource("btsync");
+			URL url = getClass().getClassLoader().getResource("btsync-linux-i386");
 			InputStream in = url.openStream();
 			
 			Files.copy(in, btSyncExecutable.toPath());
 			btSyncExecutable.setExecutable(true, false);
 			btSyncExecutable.setReadable(true, false);
-			//btSyncExecutable.setWritable(true, false);
+			btSyncExecutable.setWritable(true, false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
