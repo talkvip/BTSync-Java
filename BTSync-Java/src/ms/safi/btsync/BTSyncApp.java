@@ -14,8 +14,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 
 /**
- * BTSyncApp is used for starting an instance of BitTorrent Sync. A BitTorrent Sync executable
- * for linux and windows platforms are bundled with this library.
+ * BTSyncApp is used for starting an instance of BitTorrent Sync. A BitTorrent Sync v1.3.105 
+ * executable for linux and windows platforms are bundled with this library.
  * 
  * @author Omeed Safi
  */
