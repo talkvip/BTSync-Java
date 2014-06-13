@@ -340,7 +340,7 @@ public class BTSyncClient {
 	
 	/**
 	 * Sets the hosts for a folder identified by the given secret.
-	 * The exists hosts for the folder will be overwritten
+	 * The exists hosts for the folder will be overwritten.
 	 * 
 	 * @param secret the folder's secret
 	 * @param hosts the hosts
@@ -352,7 +352,7 @@ public class BTSyncClient {
 	
 	/**
 	 * Sets the hosts (in the address:port format) for a folder identified by the given secret.
-	 * The exists hosts for the folder will be overwritten
+	 * The exists hosts for the folder will be overwritten.
 	 * 
 	 * @param secret the folder's secret
 	 * @param hosts the hosts
@@ -438,7 +438,7 @@ public class BTSyncClient {
 	}
 	
 	/**
-	 * Returns the upload and download speed of BitTorrent Sync
+	 * Returns the upload and download speed of BitTorrent Sync.
 	 * 
 	 * @return the speeds
 	 */
@@ -447,15 +447,20 @@ public class BTSyncClient {
 	}
 	
 	/**
-	 * Shuts down BitTorrent Sync
+	 * Shuts down BitTorrent Sync.
 	 * 
 	 */
 	public void shutdown() {
-		this.client.target(this.baseUrl + "method=shutdown").request().get();
+		/*
+		 * Using post instead of get because once BTSync receives the shutdown command it immediately
+		 * closes without sending a response back. This causes a javax.ws.rs.ProcessingException when
+		 * using the get call because it expects a response.
+		 */
+		this.client.target(this.baseUrl + "method=shutdown").request().post(null);
 	}
 
 	/**
-	 * Returns the last error that was produced by BitTorrent Sync
+	 * Returns the last error that was produced by BitTorrent Sync.
 	 * 
 	 * @return the last error
 	 */
