@@ -17,13 +17,9 @@ import org.codehaus.jackson.JsonGenerator;
  * BTSyncApp is used for starting an instance of BitTorrent Sync. A BitTorrent Sync executable
  * for linux and windows platforms are bundled with this library.
  * 
- * NOTE: This now requires Java 1.7 due to the use of java.nio package
- * 
  * @author Omeed Safi
  */
-public class BTSyncApp {
-
-	//private File btSyncApp;
+public class BTSyncApp implements AutoCloseable {
 
 	private String deviceName;
 	private int listeningPort;
@@ -38,6 +34,8 @@ public class BTSyncApp {
 	private File btSyncTmpFolder = new File(System.getProperty("java.io.tmpdir"), "BTSyncJava");
 	private File btSyncExecutable;
 	private File btSyncConf = new File(btSyncTmpFolder, "sync.conf");
+	
+	private Process runningAppProcess;
 	
 	/**
 	 * Constructs a new BTSyncApp used to start a BitTorrent Sync instance with default
@@ -198,7 +196,7 @@ public class BTSyncApp {
 		
 		try {
 			System.out.println(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
-			Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
+			runningAppProcess = Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -212,7 +210,7 @@ public class BTSyncApp {
 
 		try {
 			System.out.println(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
-			Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
+			runningAppProcess = Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -286,7 +284,19 @@ public class BTSyncApp {
 		}
 	}
 	
+	@Override
 	public void close() {
+		// Close BTSync if running
+		if(runningAppProcess.isAlive()) {
+			runningAppProcess.destroyForcibly();
+			try {
+				runningAppProcess.waitFor();
+			} catch (InterruptedException e) {
+				System.out.println("Exception while waiting for the BTSync process to end");
+				e.printStackTrace();
+			}
+		}
+		
 		// Cleanup files
 		try {
 			FileUtils.deleteDirectory(btSyncTmpFolder);
