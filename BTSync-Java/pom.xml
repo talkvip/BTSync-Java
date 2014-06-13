@@ -4,14 +4,6 @@
   <artifactId>btsync-java</artifactId>
   <version>1.0.0</version>
   
-  <repositories>
-  	<!-- JBOSS Maven Repository -->
-  	<repository>
-  		<id>jboss</id>
-  		<url>http://repository.jboss.org/nexus/content/groups/public/</url>
-  	</repository>
-  </repositories>
-  
   <dependencies>
   	<!-- Core RESTEasy dependencies -->
   	<dependency>
@@ -67,4 +59,14 @@
       </plugin>
     </plugins>
   </build>
+  <name>BTSync-Java</name>
+  <url>https://bitbucket.org/osafi/btsync-java</url>
+  <description>A Java wrapper library for the BitTorrent Sync API</description>
+  <organization>
+  	<name>Safi Consulting</name>
+  	<url>http://safi.ms</url>
+  </organization>
+  <scm>
+  	<url>https://bitbucket.org/osafi/btsync-java</url>
+  </scm>
 </project>
