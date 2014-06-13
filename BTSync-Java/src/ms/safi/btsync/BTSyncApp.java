@@ -27,7 +27,6 @@ public class BTSyncApp {
 
 	private String deviceName;
 	private int listeningPort;
-	private boolean checkForUpdates;
 	private boolean useUpnp;
 	private String storagePath;
 	private boolean useGui;
@@ -37,7 +36,7 @@ public class BTSyncApp {
 	private String apiKey;
 	
 	private File btSyncTmpFolder = new File(System.getProperty("java.io.tmpdir"), "BTSyncJava");
-	private File btSyncExecutable;// = new File(btSyncTmpFolder, "btsync");
+	private File btSyncExecutable;
 	private File btSyncConf = new File(btSyncTmpFolder, "sync.conf");
 	
 	/**
@@ -48,7 +47,6 @@ public class BTSyncApp {
 	 * <ul>
 	 * <li>device_name = "BTSync-Java"
 	 * <li>listening_port = 0 (Meaning random port assignment)
-	 * <li>check_for_updates = false
 	 * <li>use_upnp = false
 	 * <li>storage_path = ./
 	 * <li>use_gui = false
@@ -61,7 +59,6 @@ public class BTSyncApp {
 	public BTSyncApp(String apiKey) {
 		this.deviceName = "BTSyncJava";
 		this.listeningPort = 0;
-		this.checkForUpdates = false;
 		this.useUpnp = false;
 		this.storagePath = "./";
 		this.useGui = false;
@@ -99,17 +96,6 @@ public class BTSyncApp {
 	 */
 	public BTSyncApp setListeningPort(int listeningPort) {
 		this.listeningPort = listeningPort;
-		return this;
-	}
-	
-	/**
-	 * Sets the check_for_updates flag for BitTorrent Sync to use. The default is <code>false</code>
-	 * 
-	 * @param checkForUpdates whether BitTorrent Sync will check for updates or not
-	 * @return the updated BTSyncApp
-	 */
-	public BTSyncApp setCheckForUpdates(boolean checkForUpdates) {
-		this.checkForUpdates = checkForUpdates;
 		return this;
 	}
 	
@@ -251,7 +237,7 @@ public class BTSyncApp {
 			jGenerator.writeStartObject(); // {
 				jGenerator.writeStringField("device_name", this.deviceName);
 				jGenerator.writeNumberField("listening_port", this.listeningPort);
-				jGenerator.writeBooleanField("check_for_updates", checkForUpdates);
+				jGenerator.writeBooleanField("check_for_updates", false); // NEVER CHECK FOR UPDATES
 				jGenerator.writeBooleanField("use_upnp", useUpnp);
 				jGenerator.writeStringField("storage_path", this.storagePath);
 				jGenerator.writeBooleanField("use_gui", this.useGui);
