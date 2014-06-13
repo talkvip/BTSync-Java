@@ -287,8 +287,8 @@ public class BTSyncApp implements AutoCloseable {
 	@Override
 	public void close() {
 		// Close BTSync if running
-		if(runningAppProcess.isAlive()) {
-			runningAppProcess.destroyForcibly();
+		if(isAlive(runningAppProcess)) {
+			runningAppProcess.destroy();
 			try {
 				runningAppProcess.waitFor();
 			} catch (InterruptedException e) {
@@ -302,6 +302,15 @@ public class BTSyncApp implements AutoCloseable {
 			FileUtils.deleteDirectory(btSyncTmpFolder);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public boolean isAlive(Process p) {
+		try {
+			p.exitValue();
+			return false;
+		} catch (IllegalThreadStateException e) {
+			return true;
 		}
 	}
 }
