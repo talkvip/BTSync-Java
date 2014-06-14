@@ -195,7 +195,8 @@ public class BTSyncApp implements AutoCloseable {
 		this.buildConf();
 		
 		try {
-			System.out.println(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
+			//Print this line using logging api
+			//System.out.println(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
 			runningAppProcess = Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " /config " + btSyncConf.getCanonicalPath());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -209,7 +210,8 @@ public class BTSyncApp implements AutoCloseable {
 		this.buildConf();
 
 		try {
-			System.out.println(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
+			//Print this line using logging api
+			//System.out.println(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
 			runningAppProcess = Runtime.getRuntime().exec(btSyncExecutable.getCanonicalPath() + " --config " + btSyncConf.getCanonicalPath());
 		} catch (IOException e) {
 			e.printStackTrace();

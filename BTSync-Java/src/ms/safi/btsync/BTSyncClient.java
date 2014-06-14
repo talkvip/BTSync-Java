@@ -252,8 +252,6 @@ public class BTSyncClient {
 	 * @return the secrets
 	 */
 	public Secrets getSecrets() {
-		// TODO: default adding encryption type attribute to get all 3 secrets (read_only, read_write, encryption)
-		// Reference thread: http://forum.bittorrent.com/topic/24794-no-encrypted-secret-on-existing-folder-secrets/
 		return this.client.target(this.baseUrl + "method=get_secrets&type=encryption")
 				.request()
 				.get(Secrets.class);
@@ -261,11 +259,6 @@ public class BTSyncClient {
 	
 	/**
 	 * Returns the secrets available to use for sharing a folder identified by the given secret.
-	 * 
-	 * <p>NOTE: This will generate the read-write and read-only secrets only. It is unclear
-	 * if this is intended behavior or not, see the following thread: 
-	 * <a href="http://forum.bittorrent.com/topic/24794-no-encrypted-secret-on-existing-folder-secrets/">
-	 * http://forum.bittorrent.com/topic/24794-no-encrypted-secret-on-existing-folder-secrets/</a>
 	 * 
 	 * @param secret the folder's secret
 	 * @return the secrets
@@ -311,13 +304,13 @@ public class BTSyncClient {
 	 * Sets the preferences for the folder identified by the given secret.
 	 * 
 	 * @param secret the folder's secret
-	 * @param useDht
-	 * @param useHosts
-	 * @param searchLan
-	 * @param useRelayServer
-	 * @param useTracker
-	 * @param useSyncTrash
-	 * @return the update preferences for the folder
+	 * @param useDht whether the folder should use DHT
+	 * @param useHosts whether the folder should use predefined hosts
+	 * @param searchLan whether to search lan
+	 * @param useRelayServer whether to use a relay server
+	 * @param useTracker whether to use a tracker server
+	 * @param useSyncTrash whether files deleted on clients become hidden
+	 * @return the updated preferences for the folder
 	 */
 	public FolderPreferences setFolderPreferences(String secret, boolean useDht, boolean useHosts, boolean searchLan, boolean useRelayServer, boolean useTracker, boolean useSyncTrash) {
 		return this.client.target(this.baseUrl + "method=set_folder_prefs&secret=" + secret + "&use_dht=" + (useDht ? "1" : "0")+ "&use_hosts=" + (useHosts ? "1" : "0")+ "&search_lan=" + (searchLan ? "1" : "0")+ "&use_relay_server=" + (useRelayServer ? "1" : "0")+ "&use_tracker=" + (useTracker ? "1" : "0")+ "&use_sync_trash=" + (useSyncTrash ? "1" : "0"))
@@ -390,7 +383,6 @@ public class BTSyncClient {
 	 * @return the updated preferences
 	 */
 	public BTSyncPreferences setPreferences(BTSyncPreferences prefs) {
-		// TODO: Do this a different way - try to use URL Form encoding
 		return this.client.target(this.baseUrl + "method=set_prefs&" + prefs.buildPrefMapString())
 				.request()
 				.get(BTSyncPreferences.class);
@@ -413,7 +405,7 @@ public class BTSyncClient {
 			e.printStackTrace();
 		}
 		
-		return "unknwn";
+		return "UNKNOWN OS";
 	}
 	
 	
