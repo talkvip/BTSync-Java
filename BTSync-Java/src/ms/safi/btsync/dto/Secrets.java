@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
  * {
  *      "read_only": "ECK2S6MDDD7EOKKJZOQNOWDTJBEEUKGME",
  *      "read_write": "DPFABC4IZX33WBDRXRPPCVYA353WSC3Q6",
- *      "encryption": "G3PNU7KTYM63VNQZFPP3Q3GAMTPRWDEZ”
+ *      "encryption": "G3PNU7KTYM63VNQZFPP3Q3GAMTPRWDEZA"
  * }
  * }
  * </pre>
