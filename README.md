@@ -1,7 +1,7 @@
 ## BTSync-Java
 
 ### Purpose
-BTSync-Java is a library for the starting and interacting with BitTorrent Sync Beta. To use this library you *must* have received an API Key from BitTorrent Sync which can be done here ***(insert link here)***.  
+BTSync-Java is a library for the starting and interacting with BitTorrent Sync Beta. To use this library you *must* have received an API Key from BitTorrent Sync which can be done [here](http://www.bittorrent.com/sync/developers).  
 Bundled with this library is the 1.3.105 version of the BitTorrent Sync Beta binary (32bit) for Windows and Linux.
 
 ### Background
@@ -21,4 +21,4 @@ Add the following dependency to your `pom.xml` to use BTSync-Java
 
 ### Resources
 
-See the wiki for examples on how you can use BTSync-Java within your application.
+See the [Wiki](https://bitbucket.org/osafi/btsync-java/wiki/Home) for examples on how you can use BTSync-Java within your application.
