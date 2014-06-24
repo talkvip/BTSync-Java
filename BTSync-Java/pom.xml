@@ -2,7 +2,39 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ms.safi.btsync</groupId>
   <artifactId>btsync-java</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>BTSync-Java</name>
+  <url>https://bitbucket.org/osafi/btsync-java</url>
+  <description>A Java wrapper library for the BitTorrent Sync API</description>
+  <organization>
+  	<name>Safi Consulting</name>
+  	<url>http://safi.ms</url>
+  </organization>
+  <scm>
+    <connection>scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git</connection>
+	<developerConnection>scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git</developerConnection>
+	<url>https://bitbucket.org/osafi/btsync-java.git</url>
+  </scm>
+  <developers>
+    <developer>
+      <id>osafi</id>
+      <name>Omeed Safi</name>
+      <email>safi.omeed@gmail.com</email>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
   
   <dependencies>
   	<!-- Core RESTEasy dependencies -->
@@ -59,14 +91,4 @@
       </plugin>
     </plugins>
   </build>
-  <name>BTSync-Java</name>
-  <url>https://bitbucket.org/osafi/btsync-java</url>
-  <description>A Java wrapper library for the BitTorrent Sync API</description>
-  <organization>
-  	<name>Safi Consulting</name>
-  	<url>http://safi.ms</url>
-  </organization>
-  <scm>
-  	<url>https://bitbucket.org/osafi/btsync-java</url>
-  </scm>
 </project>
