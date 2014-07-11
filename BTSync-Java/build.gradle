@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.jboss.resteasy',	name: 'resteasy-jaxrs',				version: '3.0.7.Final'
+    compile group: 'org.jboss.resteasy',	name: 'resteasy-client',			version: '3.0.7.Final'
+    compile group: 'org.jboss.resteasy',	name: 'resteasy-jackson-provider',	version: '3.0.7.Final'
+    compile group: 'org.apache.commons',	name: 'commons-lang3',				version: '3.3.2'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
