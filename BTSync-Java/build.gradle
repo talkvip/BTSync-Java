@@ -49,7 +49,7 @@ uploadArchives {
 			}
 			
 			pom.project {
-				name 'BTSync-Java'
+				name 'btsync-java'
 				packaging 'jar'
 				description 'A Java wrapper library for the BitTorrent Sync API'
 				url 'http://safi.ms'
