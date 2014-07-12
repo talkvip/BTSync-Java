@@ -51,6 +51,7 @@ public class BTSyncApp implements AutoCloseable {
 	 * <li>listen = 127.0.0.1:18080
 	 * <li>login = user
 	 * <li>password = password
+	 * </ul>
 	 * 
 	 * @param apiKey the BitTorrent Sync API Key
 	 */
