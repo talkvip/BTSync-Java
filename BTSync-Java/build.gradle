@@ -48,8 +48,10 @@ uploadArchives {
 				authentication(userName: sonatypeUsername, password: sonatypePassword)
 			}
 			
+			pom.artifactId = 'btsync-java'
+			
 			pom.project {
-				name 'btsync-java'
+				name 'BTSync-Java'
 				packaging 'jar'
 				description 'A Java wrapper library for the BitTorrent Sync API'
 				url 'http://safi.ms'
