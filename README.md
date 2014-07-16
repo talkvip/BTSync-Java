@@ -17,7 +17,7 @@ Add the following dependency to your `pom.xml` to use BTSync-Java
 <dependency>
 	<groupId>ms.safi.btsync</groupId>
 	<artifactId>btsync-java</artifactId>
-	<version>1.0.0</version>
+	<version>0.1</version>
 </dependency>
 ~~~
 **NOTE:** There is another artifact in Maven Central under the artifact `BTSync-Java` which SHOULD NOT be used as it was mistakenly added and will not receive future updates. 
