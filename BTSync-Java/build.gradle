@@ -19,6 +19,42 @@ dependencies {
     compile group: 'org.apache.commons',	name: 'commons-lang3',				version: '3.3.2'
 }
 
+
+pom {
+	artifactId = 'btsync-java'
+	
+	project {
+		name 'BTSync-Java'
+		packaging 'jar'
+		description 'A Java wrapper library for the BitTorrent Sync API'
+		url 'http://safi.ms'
+		
+		scm {
+			url 'https://bitbucket.org/osafi/btsync-java.git'
+			connection 'scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git'
+			developerConnection 'scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git'
+		}
+		
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+		
+		developers {
+			developer {
+				id 'osafi'
+				name 'Omeed Safi'
+				email 'safi.omeed@gmail.com'
+			}
+		}
+	}
+}
+
+
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
 	classifier = 'javadoc'
 	from 'build/docs/javadoc'
@@ -47,37 +83,41 @@ uploadArchives {
 			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
 				authentication(userName: sonatypeUsername, password: sonatypePassword)
 			}
+		}
+	}
+}
+
+task createPom {
+	pom {
+		artifactId = 'btsync-java'
+		
+		project {
+			name 'BTSync-Java'
+			packaging 'jar'
+			description 'A Java wrapper library for the BitTorrent Sync API'
+			url 'http://safi.ms'
 			
-			pom.artifactId = 'btsync-java'
+			scm {
+				url 'https://bitbucket.org/osafi/btsync-java.git'
+				connection 'scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git'
+				developerConnection 'scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git'
+			}
 			
-			pom.project {
-				name 'BTSync-Java'
-				packaging 'jar'
-				description 'A Java wrapper library for the BitTorrent Sync API'
-				url 'http://safi.ms'
-				
-				scm {
-					url 'https://bitbucket.org/osafi/btsync-java.git'
-					connection 'scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git'
-					developerConnection 'scm:git:ssh://git@bitbucket.org/osafi/btsync-java.git'
+			licenses {
+				license {
+					name 'The Apache Software License, Version 2.0'
+					url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					distribution 'repo'
 				}
-				
-				licenses {
-					license {
-						name 'The Apache Software License, Version 2.0'
-						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-						distribution 'repo'
-					}
-				}
-				
-				developers {
-					developer {
-						id 'osafi'
-						name 'Omeed Safi'
-						email 'safi.omeed@gmail.com'
-					}
+			}
+			
+			developers {
+				developer {
+					id 'osafi'
+					name 'Omeed Safi'
+					email 'safi.omeed@gmail.com'
 				}
 			}
 		}
-	}
+	}.writeTo("pom.xml")
 }
